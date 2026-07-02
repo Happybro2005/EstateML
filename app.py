@@ -34,24 +34,17 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
     
-    /* Make entire page body, app canvas, and sidebar consistently light */
-    html, body, [class*="css"], .stApp {
+    /* Global font overrides and clean light styling */
+    .stApp {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #F8FAFC !important;
-        color: #0F172A !important;
     }
     
     [data-testid="stSidebar"] {
-        background-color: #F1F5F9 !important;
         border-right: 1px solid #E2E8F0 !important;
     }
     
-    /* Style headers and markdown text for legibility */
-    .stMarkdown, p, li, span, label, div {
-        color: #334155 !important;
-    }
-    h1, h2, h3, h4, h5, h6, [data-testid="stHeader"] {
-        color: #0F172A !important;
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Outfit', sans-serif;
     }
     
     /* Brand title styling */
@@ -289,7 +282,7 @@ if page == "🏠 Home":
                 - Allocate budget toward local and international lead sources.
             """)
         with col2:
-            st.image("https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", caption="Real Estate Portfolio Management", use_column_width=True)
+            st.image("https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", caption="Real Estate Portfolio Management", width="stretch")
             
         st.markdown("<h3 class='section-header'>Real Estate Buyer Cohorts</h3>", unsafe_allow_html=True)
         cohort_cols = st.columns(4)
@@ -363,7 +356,7 @@ elif page == "📊 EDA":
                     obs = "The satisfaction distribution shows high average ratings (4.0+), indicating strong overall buyer happiness, with occasional lower scores among corporate/value buyers."
             
             if fig:
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
                 st.markdown(f"<div class='rec-box'><div class='rec-title'>EDA Observation:</div><p style='margin-bottom:0;'>{obs}</p></div>", unsafe_allow_html=True)
                 
         with tab2:
@@ -377,7 +370,7 @@ elif page == "📊 EDA":
                 x=corr.columns, y=corr.index,
                 color_continuous_scale="RdBu", color_continuous_midpoint=0
             )
-            st.plotly_chart(fig_heat, use_container_width=True)
+            st.plotly_chart(fig_heat, width="stretch")
             st.markdown("""
                 **Key Correlation Insights:**
                 - **Purchase Price vs Property Size**: Strong positive correlation (+0.95+), confirming property dimensions dictate transaction ticket value.
@@ -443,7 +436,7 @@ elif page == "🤖 Buyer Segmentation":
                             title="Interactive 2D PCA Cluster Space Projection",
                             opacity=0.8, height=600
                         )
-                    st.plotly_chart(fig_pca, use_container_width=True)
+                    st.plotly_chart(fig_pca, width="stretch")
                     
                 with col_right:
                     st.markdown("#### PCA Details:")
@@ -457,7 +450,7 @@ elif page == "🤖 Buyer Segmentation":
                     sizes.columns = ["Segment", "Count"]
                     fig_sizes = px.pie(sizes, values="Count", names="Segment", color="Segment", color_discrete_sequence=px.colors.qualitative.Set1, height=280)
                     fig_sizes.update_layout(showlegend=False, margin=dict(l=0, r=0, b=0, t=0))
-                    st.plotly_chart(fig_sizes, use_container_width=True)
+                    st.plotly_chart(fig_sizes, width="stretch")
             else:
                 st.error("Saved KMeans model not found under models/")
                 
@@ -473,13 +466,13 @@ elif page == "🤖 Buyer Segmentation":
             with col_el:
                 st.markdown("#### Elbow Method (Inertia)")
                 if os.path.exists(elbow_file):
-                    st.image(elbow_file, use_column_width=True)
+                    st.image(elbow_file, width="stretch")
                 else:
                     st.info("Run `run_pipeline.py` to generate model comparison metrics.")
             with col_me:
                 st.markdown("#### Validation Metrics (Silhouette, DB, CH)")
                 if os.path.exists(metrics_file):
-                    st.image(metrics_file, use_column_width=True)
+                    st.image(metrics_file, width="stretch")
                 else:
                     st.info("Run `run_pipeline.py` to generate model comparison metrics.")
     else:
@@ -502,7 +495,7 @@ elif page == "🌍 Geographic Analysis":
                 color_discrete_sequence=px.colors.qualitative.Set1,
                 barmode="stack"
             )
-            st.plotly_chart(fig_country, use_container_width=True)
+            st.plotly_chart(fig_country, width="stretch")
             
             # Country Average purchase price
             avg_price_c = df_filtered.groupby(config.COL_COUNTRY)[config.COL_PURCHASE_PRICE].mean().reset_index()
@@ -511,7 +504,7 @@ elif page == "🌍 Geographic Analysis":
                 title="Average Property Investment Size by Country (USD)",
                 color_discrete_sequence=["#2E8B57"]
             )
-            st.plotly_chart(fig_price_c, use_container_width=True)
+            st.plotly_chart(fig_price_c, width="stretch")
             
         with tab_geo2:
             region_sum = df_filtered.groupby([config.COL_REGION, "cluster_name"]).size().reset_index(name="Count")
@@ -521,7 +514,7 @@ elif page == "🌍 Geographic Analysis":
                 color_discrete_sequence=px.colors.qualitative.Set1,
                 barmode="group"
             )
-            st.plotly_chart(fig_region, use_container_width=True)
+            st.plotly_chart(fig_region, width="stretch")
     else:
         st.warning("Data not loaded. Run pipeline first.")
 
@@ -540,7 +533,7 @@ elif page == "💰 Investment Profiling":
                 color="cluster_name", color_discrete_sequence=px.colors.qualitative.Set1,
                 title="Property Acquisition Price by Buyer Segment"
             )
-            st.plotly_chart(fig_price, use_container_width=True)
+            st.plotly_chart(fig_price, width="stretch")
             
             # Property size distribution by Segment
             fig_size = px.box(
@@ -548,7 +541,7 @@ elif page == "💰 Investment Profiling":
                 color="cluster_name", color_discrete_sequence=px.colors.qualitative.Set1,
                 title="Property Dimensions (Size in Sqft) by Buyer Segment"
             )
-            st.plotly_chart(fig_size, use_container_width=True)
+            st.plotly_chart(fig_size, width="stretch")
             
         with col2:
             # Loan Applied by segment
@@ -560,7 +553,7 @@ elif page == "💰 Investment Profiling":
                 title="Mortgage Loan Applications by Buyer Segment",
                 barmode="stack"
             )
-            st.plotly_chart(fig_loan, use_container_width=True)
+            st.plotly_chart(fig_loan, width="stretch")
             
             # Acquisition purpose by Segment
             purpose_counts = df_filtered.groupby(["cluster_name", config.COL_ACQUISITION_PURPOSE]).size().reset_index(name="Count")
@@ -569,7 +562,7 @@ elif page == "💰 Investment Profiling":
                 title="Acquisition Purpose distribution by Buyer Segment",
                 barmode="stack"
             )
-            st.plotly_chart(fig_purpose, use_container_width=True)
+            st.plotly_chart(fig_purpose, width="stretch")
     else:
         st.warning("Data not loaded. Run pipeline first.")
 
@@ -603,7 +596,7 @@ elif page == "📈 Cluster Insights":
         cluster_summary["Average Age"] = cluster_summary["Average Age"].apply(lambda x: f"{x:.1f} yrs")
         cluster_summary["Average Satisfaction"] = cluster_summary["Average Satisfaction"].apply(lambda x: f"{x:.2f} / 5.0")
         
-        st.dataframe(cluster_summary, use_container_width=True)
+        st.dataframe(cluster_summary, width="stretch")
         
         # Select Segment for recommendations
         st.markdown("### Actionable Business Recommendations")
@@ -664,7 +657,7 @@ elif page == "📈 Cluster Insights":
             color="cluster_name", color_discrete_sequence=px.colors.qualitative.Set1,
             title="Customer Satisfaction Score by Buyer Segment"
         )
-        st.plotly_chart(fig_sat, use_container_width=True)
+        st.plotly_chart(fig_sat, width="stretch")
     else:
         st.warning("Data not loaded. Run pipeline first.")
 
@@ -843,4 +836,4 @@ elif page == "ℹ Model Information":
             
         metrics_file = os.path.join(config.FIGURES_DIR, "clustering_metrics.png")
         if os.path.exists(metrics_file):
-            st.image(metrics_file, caption="Cluster Evaluation Metrics Suite", use_column_width=True)
+            st.image(metrics_file, caption="Cluster Evaluation Metrics Suite", width="stretch")
