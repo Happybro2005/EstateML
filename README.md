@@ -1,6 +1,8 @@
 # Real Estate Buyer Segmentation & Investment Profiling
 ### Unsupervised Machine Learning Solution for Parcl Co. Limited
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=Happybro2005/EstateML&branch=main&mainModule=app.py)
+
 This project implements an end-to-end unsupervised machine learning pipeline to identify hidden buyer segments in the real estate market. Using client transactional and demographic history, the system groups customers into distinct investment cohorts (First-Time Buyers, Global Investors, Corporate Buyers, Luxury Investors) using clustering algorithms. A premium multi-page Streamlit dashboard allows brokers and executives to interactively explore findings and profile new leads.
 
 ---
