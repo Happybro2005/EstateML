@@ -24,29 +24,34 @@ st.set_page_config(
 st.sidebar.markdown("""
     <div style='text-align: center; padding-top: 1rem;'>
         <h2 style='font-family: Outfit; font-weight: 800; color: #0072FF; margin-bottom: 0px;'>Parcl Co.</h2>
-        <p style='color: #8A9AAD; font-size: 0.8rem; text-transform: uppercase;'>Market Intelligence</p>
+        <p style='color: #64748B; font-size: 0.8rem; text-transform: uppercase;'>Market Intelligence</p>
     </div>
-    <hr style='margin-top: 0.5rem; margin-bottom: 1rem; border-color: #334155;'/>
+    <hr style='margin-top: 0.5rem; margin-bottom: 1rem; border-color: #E2E8F0;'/>
 """, unsafe_allow_html=True)
 
-# Custom Premium Styling (Entire Page Dark Mode)
+# Custom Premium Styling (Entire Page Light Mode)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
     
-    /* Make entire page body, app canvas, and sidebar consistently dark */
-    html, body, [class*="css"], .stApp, [data-testid="stSidebar"] {
+    /* Make entire page body, app canvas, and sidebar consistently light */
+    html, body, [class*="css"], .stApp {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #0B0F19 !important;
-        color: #F8FAFC !important;
+        background-color: #F8FAFC !important;
+        color: #0F172A !important;
     }
     
-    /* Style headers and markdown text for high contrast */
+    [data-testid="stSidebar"] {
+        background-color: #F1F5F9 !important;
+        border-right: 1px solid #E2E8F0 !important;
+    }
+    
+    /* Style headers and markdown text for legibility */
     .stMarkdown, p, li, span, label, div {
-        color: #E2E8F0 !important;
+        color: #334155 !important;
     }
     h1, h2, h3, h4, h5, h6, [data-testid="stHeader"] {
-        color: #FFFFFF !important;
+        color: #0F172A !important;
     }
     
     /* Brand title styling */
@@ -62,7 +67,7 @@ st.markdown("""
     
     .subtitle {
         font-size: 1.2rem;
-        color: #94A3B8;
+        color: #64748B;
         margin-bottom: 2rem;
     }
     
@@ -70,14 +75,14 @@ st.markdown("""
         font-family: 'Outfit', sans-serif;
         font-weight: 600;
         font-size: 1.8rem;
-        color: #F1F5F9;
-        border-bottom: 2px solid #334155;
+        color: #1E293B;
+        border-bottom: 2px solid #E2E8F0;
         padding-bottom: 0.4rem;
         margin-top: 1.5rem;
         margin-bottom: 1rem;
     }
     
-    /* Glassmorphism Metric Cards */
+    /* Glassmorphism Metric Cards in Light Mode */
     .kpi-container {
         display: flex;
         gap: 1.5rem;
@@ -86,41 +91,41 @@ st.markdown("""
     }
     
     .kpi-card {
-        background: rgba(30, 41, 59, 0.75);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(226, 232, 240, 0.8);
         border-radius: 16px;
         padding: 1.5rem;
         flex: 1;
         min-width: 220px;
-        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .kpi-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 16px 50px 0 rgba(0, 72, 255, 0.2);
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
         border-color: #0072FF;
     }
     
     .kpi-val {
         font-size: 2rem;
         font-weight: 700;
-        color: #FFFFFF;
+        color: #0F172A;
         margin-bottom: 0.2rem;
     }
     
     .kpi-label {
         font-size: 0.9rem;
-        color: #94A3B8;
+        color: #64748B;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
     
-    /* Premium Recommendation banner */
+    /* Premium Recommendation banner in Light Mode */
     .rec-box {
-        background: linear-gradient(135deg, rgba(0, 114, 255, 0.1), rgba(0, 198, 255, 0.1));
+        background: linear-gradient(135deg, rgba(0, 114, 255, 0.05), rgba(0, 198, 255, 0.05));
         border-left: 5px solid #0072FF;
         border-radius: 8px;
         padding: 1.5rem;
@@ -130,26 +135,26 @@ st.markdown("""
     
     .rec-title {
         font-weight: 700;
-        color: #00C6FF;
+        color: #0072FF;
         margin-bottom: 0.5rem;
     }
     
-    /* Ensure Streamlit form / selectors look clean and legible on dark backgrounds */
+    /* Ensure Streamlit form / selectors look clean and legible on light backgrounds */
     div[data-baseweb="select"] > div {
-        background-color: #1E293B !important;
-        color: #F8FAFC !important;
-        border-color: #334155 !important;
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
+        border-color: #CBD5E1 !important;
     }
     input, button, select, textarea {
-        background-color: #1E293B !important;
-        color: #F8FAFC !important;
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
     }
     
     </style>
 """, unsafe_allow_html=True)
 
-# Lock Plotly template to dark globally
-plotly_template = "plotly_dark"
+# Lock Plotly template to light globally
+plotly_template = "plotly_white"
 import plotly.io as pio
 pio.templates.default = plotly_template
 
