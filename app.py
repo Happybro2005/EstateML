@@ -20,101 +20,230 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom Premium Styling (Dark Theme & Glassmorphism Aesthetics)
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
-    
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    
-    .main-title {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 800;
-        font-size: 2.8rem;
-        background: linear-gradient(135deg, #00C6FF, #0072FF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 0.5rem;
-    }
-    
-    .subtitle {
-        font-size: 1.2rem;
-        color: #8A9Aad;
-        margin-bottom: 2rem;
-    }
-    
-    .section-header {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 600;
-        font-size: 1.8rem;
-        color: #1E293B;
-        border-bottom: 2px solid #E2E8F0;
-        padding-bottom: 0.4rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* Glassmorphism Metric Cards */
-    .kpi-container {
-        display: flex;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-    
-    .kpi-card {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        border-radius: 16px;
-        padding: 1.5rem;
-        flex: 1;
-        min-width: 220px;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .kpi-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
-        border-color: #0072FF;
-    }
-    
-    .kpi-val {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #0F172A;
-        margin-bottom: 0.2rem;
-    }
-    
-    .kpi-label {
-        font-size: 0.9rem;
-        color: #64748B;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    /* Recommendation banner */
-    .rec-box {
-        background: linear-gradient(135deg, rgba(0, 114, 255, 0.05), rgba(0, 198, 255, 0.05));
-        border-left: 5px solid #0072FF;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-top: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .rec-title {
-        font-weight: 700;
-        color: #0072FF;
-        margin-bottom: 0.5rem;
-    }
-    
-    </style>
+# Sidebar Brand (Rendered at top)
+st.sidebar.markdown("""
+    <div style='text-align: center; padding-top: 1rem;'>
+        <h2 style='font-family: Outfit; font-weight: 800; color: #0072FF; margin-bottom: 0px;'>Parcl Co.</h2>
+        <p style='color: #64748B; font-size: 0.8rem; text-transform: uppercase;'>Market Intelligence</p>
+    </div>
+    <hr style='margin-top: 0.5rem; margin-bottom: 1rem;'/>
 """, unsafe_allow_html=True)
+
+# Sidebar Theme Selector
+app_theme = st.sidebar.selectbox("App Theme Mode", ["🌙 Dark Mode", "☀️ Light Mode"], index=0)
+st.sidebar.markdown("<hr style='margin-top: 0.5rem; margin-bottom: 1rem;'/>", unsafe_allow_html=True)
+
+# Custom Premium Styling (Conditional Theme Injection)
+if app_theme == "🌙 Dark Mode":
+    st.markdown("""
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+        
+        html, body, [class*="css"], .stApp {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0F172A !important;
+            color: #F8FAFC !important;
+        }
+        
+        .main-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #00C6FF, #0072FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94A3B8;
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: #F1F5F9;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 0.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .kpi-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .kpi-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 220px;
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 50px 0 rgba(0, 72, 255, 0.15);
+            border-color: #0072FF;
+        }
+        
+        .kpi-val {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 0.2rem;
+        }
+        
+        .kpi-label {
+            font-size: 0.9rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .rec-box {
+            background: linear-gradient(135deg, rgba(0, 114, 255, 0.1), rgba(0, 198, 255, 0.1));
+            border-left: 5px solid #0072FF;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .rec-title {
+            font-weight: 700;
+            color: #00C6FF;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stMarkdown, p, li, span, label {
+            color: #E2E8F0 !important;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #FFFFFF !important;
+        }
+        
+        </style>
+    """, unsafe_allow_html=True)
+    plotly_template = "plotly_dark"
+else:
+    st.markdown("""
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+        
+        html, body, [class*="css"], .stApp {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F8FAFC !important;
+            color: #0F172A !important;
+        }
+        
+        .main-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #00C6FF, #0072FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #64748B;
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: #1E293B;
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 0.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .kpi-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 220px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
+            border-color: #0072FF;
+        }
+        
+        .kpi-val {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 0.2rem;
+        }
+        
+        .kpi-label {
+            font-size: 0.9rem;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .rec-box {
+            background: linear-gradient(135deg, rgba(0, 114, 255, 0.05), rgba(0, 198, 255, 0.05));
+            border-left: 5px solid #0072FF;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .rec-title {
+            font-weight: 700;
+            color: #0072FF;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stMarkdown, p, li, span, label {
+            color: #334155 !important;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #0F172A !important;
+        }
+        
+        </style>
+    """, unsafe_allow_html=True)
+    plotly_template = "plotly_white"
+
+# Apply Plotly Template globally
+import plotly.io as pio
+pio.templates.default = plotly_template
 
 # Helper function to load cache-safe resources
 @st.cache_data
@@ -140,14 +269,7 @@ def load_ml_models():
 df_data = load_processed_data()
 kmeans, scaler, encoder = load_ml_models()
 
-# Sidebar Brand
-st.sidebar.markdown("""
-    <div style='text-align: center; padding-top: 1rem;'>
-        <h2 style='font-family: Outfit; font-weight: 800; color: #0072FF; margin-bottom: 0px;'>Parcl Co.</h2>
-        <p style='color: #64748B; font-size: 0.8rem; text-transform: uppercase;'>Market Intelligence</p>
-    </div>
-    <hr style='margin-top: 0.5rem; margin-bottom: 1rem;'/>
-""", unsafe_allow_html=True)
+# Brand rendered at top of sidebar
 
 # Navigation Radio
 page = st.sidebar.radio(
