@@ -4,12 +4,12 @@ import pandas as pd
 import numpy as np
 
 def parse_properties_pdf():
-    pdf_path = r"C:\Users\Prashant Singh\Downloads\properties.pdf"
-    csv_output_path = r"d:\unified\ml based\buyer_segmentation\data\properties.csv"
-    
+    # Use dynamic and relative paths for cross-platform support
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    pdf_path = os.path.join(os.path.expanduser("~"), "Downloads", "properties.pdf")
+    csv_output_path = os.path.join(base_dir, "data", "properties.csv")
     if not os.path.exists(pdf_path):
         raise FileNotFoundError(f"PDF not found at: {pdf_path}")
-        
     print(f"Loading PDF from {pdf_path}...")
     reader = pypdf.PdfReader(pdf_path)
     records = []
